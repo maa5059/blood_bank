@@ -40,6 +40,23 @@ if(isset($_POST['update'])){
     }
     $conn->close();
 }
+}elseif (isset($_SESSION['did'])) {
+    if(isset($_POST['update'])){
+        $id=$_SESSION['did'];
+    $dname = $_POST['dname'];
+    $demail = $_POST['demail'];
+    $dphone = $_POST['dphone'];
+    $dpassword = $_POST['dpassword'];
+    $update = "UPDATE docter SET dname='$dname', demail='$demail', dpassword='$dpassword', dphone='$dphone' WHERE did='$id'";
+    if ($conn->query($update) === TRUE) {
+        $msg= "Your profile is updated successfully.";
+        header( "location:../dprofile.php?msg=".$msg);
+    } else {
+        $error= "Error: " . $sql . "<br>" . $conn->error;
+        header( "location:../dprofile.php?error=".$error);
+    }
+    $conn->close();
+}
 }else{
     header("location:../login.php");
 }
